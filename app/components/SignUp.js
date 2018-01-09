@@ -29,8 +29,26 @@ static navigationOptions = {
     const { navigate } = this.props.navigation;
      return (
       <View style={styles.outer}>
-        <Text> SIGN UP </Text>
-      </View>
+      <View style={styles.container}>
+        <TextInput
+            placeholder="Username or Email"
+            placeholderTextColor="#FFF"
+            style={styles.input}
+            />
+        <TextInput
+            placeholder="Password"
+            placeholderTextColor="#FFF"
+            secureTextEntry
+            style={styles.input}
+            />
+            </View>
+            <View>
+        <TouchableOpacity onPress= { ()=> navigate('LoggedIn')}>
+        <Text style={styles.buttonText}>SIGN UP</Text>
+        </TouchableOpacity>
+        </View>
+ </View>
+
        );
   }
 }
@@ -38,7 +56,8 @@ static navigationOptions = {
 const styles = StyleSheet.create({
     outer: {
       flex: 1,
-      backgroundColor: '#8fad88'
+      backgroundColor: '#8fad88',
+      justifyContent: 'center',
     },
     container: {
         marginTop: 50,

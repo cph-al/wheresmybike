@@ -81,10 +81,12 @@ const styles = StyleSheet.create({
         marginTop: 50,
         flex: 0,
         alignItems: 'center',
+        justifyContent: 'center'
     },
     logoText: {
       padding: 20,
       fontSize: 24,
+      justifyContent: 'center',
     },
     input: {
         width: 300,
