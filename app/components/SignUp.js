@@ -13,11 +13,10 @@ import {
 import {StackNavigator } from 'react-navigation';
 
 
-export default class Login extends React.Component<> {
-  static navigationOptions = {
-    title: 'Home',
+export default class SignUp extends React.Component<> {
+static navigationOptions = {
+    title: 'SignUp',
   };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -25,49 +24,13 @@ export default class Login extends React.Component<> {
             password: '',
         }
     }
-/*
-    componentDidMount() {
-       this._loadInitialState().done();
-    }
-    _loadInitialState = async () => {
-        var value = await AsyncStorage.getItem('user');
-        if (value)!== null {
-            this.props.navigation.navigate 'P');
-        }
-    }*/
+
   render() {
     const { navigate } = this.props.navigation;
      return (
       <View style={styles.outer}>
-
-     
-     <View style={styles.container}>
-      <Image
-            style={styles.backgroundImage}
-            source={require('../Images/loogoo.png')}
-      />
-      <Text style={styles.logoText}> WHERE'S  MY BIKE </Text>
-        <TextInput
-            placeholder="Username or Email"
-            placeholderTextColor="#FFF"
-            style={styles.input}
-            />
-        <TextInput
-            placeholder="Password"
-            placeholderTextColor="#FFF"
-            secureTextEntry
-            style={styles.input}
-            />
-            </View>
-            <View>
-        <TouchableOpacity onPress= { ()=> navigate('LoggedIn')}>
-        <Text style={styles.buttonText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress= { ()=> navigate('SignUp')}>
-        <Text style={styles.buttonTexto}>SIGN UP</Text>
-        </TouchableOpacity>
-        </View>
- </View>
+        <Text> SIGN UP </Text>
+      </View>
        );
   }
 }
