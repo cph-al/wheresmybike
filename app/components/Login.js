@@ -10,7 +10,9 @@ import {
   AsyncStorage,
 } from 'react-native';
 import {StackNavigator } from 'react-navigation';
-export default class Login extends Component<{}> {
+
+
+export default class Login extends Component<> {
 
     constructor(props) {
         super(props);
@@ -30,47 +32,65 @@ export default class Login extends Component<{}> {
         }
     }*/
   render() {
-    return (
-        <View style={styles.wrapper>
+     return (
+     <View style={styles.container}>
 
+        <TextInput
+            placeholder="Username or Email"
+            placeholderTextColor="#FFF"
+            style={styles.input}
+            />
+        <TextInput
+            placeholder="Password"
+            placeholderTextColor="#FFF"
+            secureTextEntry
+            style={styles.input}
+            />
 
-
-                <Text style={styles.header}> - LOGIN - </Text>
-
-                <TextInput
-                    style={styles.textInput} placeholder="Username & Email"
-                    onChangeText= { (username) =this.setState ({username}) }
-                    underlineColorAndroid='transparent'
-                 />
-                 <TextInput
-                     style={styles.textInput} placeholder="Password"
-                     onChangeText= { (username) =this.setState ({password}) }
-                     underlineColorAndroid='transparent'
-                  />
-            </View>
-
-        } );
+        <TouchableOpacity onPress={() => this.props.navigate('Homepage')}>
+        <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Text style={styles.buttonTexto}>SIGN UP</Text>
+        </TouchableOpacity>
+        </View>
+       );
+  }
 }
 
 const styles = StyleSheet.create({
-     open: {
-       flex: 1,
-       justifyContent: 'center',
-       alignItems: 'center',
-       backgroundColor: '#F5FCFF',
-     },
-     welcome: {
-       fontSize: 20,
-       textAlign: 'center',
-       margin: 10,
-     },
-     instructions: {
-       textAlign: 'center',
-       color: '#333333',
-       marginBottom: 5,
-     },
-     wrapper: {
-     flex: 1
-     }
+    container: {
+        padding: 50
+    },
+    input: {
+        width: 300,
+        backgroundColor: '#3aa821',
+        marginBottom: 15,
+        color: '#FFF',
+        paddingHorizontal: 10,
+        textAlign: 'center',
+        opacity: 0.5
+    },
+    buttonContainer: {
+        backgroundColor: '#3aa821',
+        paddingVertical: 15,
+        padding: 1,
 
-   });
+    },
+    buttonText: {
+        textAlign: 'center',
+        fontWeight: '800',
+        color: '#FFF',
+        padding: 20,
+        fontSize: 18,
+        textDecorationLine: 'underline'
+    },
+    buttonTexto: {
+        textAlign: 'center',
+        fontWeight: '800',
+        color: '#FFF',
+        padding: 20,
+        opacity: 0.5,
+        fontSize: 12
+    }
+});
