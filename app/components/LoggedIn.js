@@ -30,7 +30,7 @@ static navigationOptions = {
      return (
       <View style={styles.outer}>
             <View style={styles.container}>
-              <TouchableOpacity style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.buttonContainer} onPress= { ()=> navigate('maps')}>
               <Text style={styles.buttonText}> Placér din cykel</Text>
               </TouchableOpacity>
              </View>
