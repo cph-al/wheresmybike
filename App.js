@@ -11,6 +11,7 @@ import Login from './app/components/Login'
 import LoggedIn from './app/components/LoggedIn';
 import SignUp from './app/components/SignUp';
 import maps from './app/components/maps';
+import { PermissionsAndroid } from 'react-native';
 
 const Application = StackNavigator({
         Home: { screen: Login},
@@ -22,6 +23,24 @@ const Application = StackNavigator({
                 header: false,
             }
     });
+async function requestCameraPermission() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.ACCESS_FINE_LOCATION,
+      {
+        'title': "WHERE'S MY BIKE ",
+        'message': "Where's my bike would like to use your location"
+      }
+    )
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("Location enabled")
+    } else {
+      console.log("Location denied")
+    }
+  } catch (err) {
+    console.warn(err)
+  }
+}
 export default class App extends React.Component<{}> {
   render() {
     return (

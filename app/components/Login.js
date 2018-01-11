@@ -49,6 +49,7 @@ export default class Login extends React.Component<> {
       
       <Text style={styles.logoText}> WHERE'S  MY BIKE </Text>
         <TextInput
+
             autoCorrect={false}
             placeholder="Username or Email"
             placeholderTextColor="#FFF"

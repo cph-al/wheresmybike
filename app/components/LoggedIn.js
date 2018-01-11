@@ -78,8 +78,7 @@ const styles = StyleSheet.create({
     },
     container: {
         marginTop: 5,
-        marginLeft: 55,
-        marginRight: 55,
+        marginHorizontal: 55,
         flex: 0,
         alignItems: 'center',
         justifyContent: 'center',
