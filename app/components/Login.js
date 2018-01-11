@@ -46,8 +46,10 @@ export default class Login extends React.Component<> {
             style={styles.backgroundImage}
             source={require('../Images/loogoo.png')}
       />
+      
       <Text style={styles.logoText}> WHERE'S  MY BIKE </Text>
         <TextInput
+            autoCorrect={false}
             placeholder="Username or Email"
             placeholderTextColor="#FFF"
             style={styles.input}
@@ -58,8 +60,8 @@ export default class Login extends React.Component<> {
             secureTextEntry
             style={styles.input}
             />
-            </View>
-            <View>
+        </View>  
+        <View>
         <TouchableOpacity onPress= { ()=> navigate('LoggedIn')}>
         <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
@@ -75,18 +77,22 @@ export default class Login extends React.Component<> {
 const styles = StyleSheet.create({
     outer: {
       flex: 1,
-      backgroundColor: '#8fad88'
+      backgroundColor: '#8fad88',
+      justifyContent: 'center',
+      opacity: 0.8
     },
     container: {
-        marginTop: 50,
+        marginTop: 20,
         flex: 0,
         alignItems: 'center',
         justifyContent: 'center'
     },
     logoText: {
+      alignItems: 'center',
       padding: 20,
       fontSize: 24,
       justifyContent: 'center',
+      color: '#fff'
     },
     input: {
         width: 300,
@@ -95,7 +101,8 @@ const styles = StyleSheet.create({
         color: '#FFF',
         paddingHorizontal: 10,
         textAlign: 'center',
-        opacity: 0.5
+        opacity: 0.5,
+        
     },
     buttonContainer: {
         backgroundColor: '#3aa821',
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
         color: '#FFF',
         padding: 20,
         fontSize: 18,
-        textDecorationLine: 'underline'
+        //textDecorationLine: 'underline'
     },
     buttonTexto: {
         textAlign: 'center',
