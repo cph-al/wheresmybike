@@ -33,8 +33,8 @@ export default class maps extends React.Component<> {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: 55.76832,
+            longitude: 12.503716,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
