@@ -41,7 +41,7 @@ class DefaultMarkers extends React.Component {
   }
   watchID: ?number = null
 
-  /*componentDidMount() {
+  componentDidMount() {
     navigator.geolocation.getCurrentPosition(position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
@@ -71,7 +71,7 @@ class DefaultMarkers extends React.Component {
       }    
     }
   }
-*/
+
   onMapPress(e) {
     this.setState({
       markers: [
