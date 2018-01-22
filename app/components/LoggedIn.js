@@ -36,27 +36,15 @@ static navigationOptions = {
              </View>
              
             <View style={styles.container}> 
-              <TouchableOpacity style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.buttonContainer} onPress= { ()=> navigate('findbike')}>
               <Text style={styles.buttonText}> Hvor er min cykel?</Text>
               </TouchableOpacity>
             </View>
              
             <View style={styles.container}> 
-              <TouchableOpacity style={styles.buttonContainer}>
+             <TouchableOpacity style={styles.buttonContainer} onPress= { ()=> navigate('maps')}>
               <Text style={styles.buttonText}> Find min cykel</Text>
               </TouchableOpacity> 
-            </View>
-             
-            <View style={styles.container}> 
-              <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.buttonText}> Om os </Text>
-              </TouchableOpacity>
-            </View>
-             
-            <View style={styles.container}> 
-              <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.buttonText}> Kontakt </Text>
-              </TouchableOpacity>
             </View>
               
             <View style={styles.ndcontainer}>
@@ -87,7 +75,7 @@ const styles = StyleSheet.create({
 
     },
     ndcontainer: {
-        marginTop: 30,
+        marginTop: 50,
         marginLeft: 55,
         marginRight: 55,
         flex: 0,

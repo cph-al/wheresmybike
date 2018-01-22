@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Compenent } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,27 +9,22 @@ import {
 
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
-import MapViewDirections from 'react-native-maps-directions'
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.004;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-let id = 0;
+const markers = [];
+let id = 1;
 
 function randomColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
-const coordinates = [{
-  latitude: 55.768548,
-  longitude: 12.503559,}
-];
 
-const GOOGLE_MAPS_APIKEY = '...';
-class DefaultMarkers extends React.Component {
-static navigationOptions = {
-    title: 'maps',
-  };
+class FindBike extends React.Component {
+  static navigationOptions = {
+    title: 'findbike',
+      };
   constructor(props) {
     super(props);
 
@@ -49,7 +44,7 @@ static navigationOptions = {
     }
   }
 
-  watchID: ?number = null
+  // watchID: ?number = null
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -93,15 +88,14 @@ static navigationOptions = {
           coordinate: e.nativeEvent.coordinate,
           key: id++,
           color: randomColor(),
-
         },
+        markers.push()
       ],
     });
   }
   clearMarkers(e){
     this.setState({
       markers: []
-      //...this.state.markers]
     });
   }
 
@@ -115,32 +109,13 @@ static navigationOptions = {
           initialPosition={this.state.initialRegion}
           region={this.state.initialPosition}
         >
-        <MapView.Marker coordinate={coordinates[0]} />
-        <MapView.Marker coordinate={this.state.markerPosition}>
-             <View style={styles.radius}>
-              <View style={styles.marker} />
-            </View>
-         </MapView.Marker>
-        <MapViewDirections
-        origin = {this.state.initialPosition}
-        destination = {coordinates[0]}
-        apikey = {"AIzaSyD-SDJ2cVwlJgqLgTHaU76SCxyJpzPDhOA"}
-        strokeWidth = {4}
-        strokeColor = "darkblue"
-        mode = "walking"
-        />
           {this.state.markers.map(marker => (
             <MapView.Marker
               key={marker.key}
               coordinate={this.state.markerPosition}
               pinColor={marker.color}
               bubble={this.state.initialPosition}
-            >
-            <View style={styles.radius}>
-              <View style={styles.marker} />
-            </View>
-            </MapView.Marker>
-
+            />
           ))}
         </MapView>
         <View style={styles.buttonContainer}>
@@ -161,8 +136,9 @@ static navigationOptions = {
     );
   }
 }
-
-DefaultMarkers.propTypes = {
+console.log('Jeg når hertil fgt');
+console.log(markers)
+FindBike.propTypes = {
   provider: MapView.ProviderPropType,
 };
 
@@ -174,26 +150,6 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-  },
-  radius: {
-    height: 50,
-    width: 50,
-    borderRadius: 50 / 2,
-    overflow: 'hidden',
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(0, 112, 255, 0.3)',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  marker: {
-    height: 20,
-    width: 20,
-    borderWidth: 3,
-    borderColor: 'white',
-    borderRadius: 20 / 2,
-    overflow: 'hidden',
-    backgroundColor: '#007AFF'
   },
   bubble: {
     backgroundColor: 'rgba(072,250,041,0.7)',
@@ -218,4 +174,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = DefaultMarkers;
+module.exports = FindBike;

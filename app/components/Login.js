@@ -31,7 +31,7 @@ export default class Login extends React.Component<> {
     }
     _loadInitialState = async () => {
         var value = await AsyncStorage.getItem('user');
-        if (value)!== null {
+        if ((value) !== null {
             this.props.navigation.navigate 'P');
         }
     }*/
