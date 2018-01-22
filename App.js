@@ -11,7 +11,6 @@ import Login from './app/components/Login'
 import LoggedIn from './app/components/LoggedIn';
 import SignUp from './app/components/SignUp';
 import maps from './app/components/maps';
-
 import FindBike from './app/components/FindBike';
 import { PermissionsAndroid } from 'react-native';
 
