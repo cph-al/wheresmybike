@@ -11,22 +11,33 @@ import {
   Image
 } from 'react-native';
 import {StackNavigator } from 'react-navigation';
+import axios from 'axios';
 
 
-export default class SignUp extends React.Component<> {
-static navigationOptions = {
-    title: 'SignUp',
-  };
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-        }
+export default class SignUp extends Component {
+// static navigationOptions = {
+//     title: 'SignUp',
+//   };
+    state = {
+        temp: "Sign up"
     }
 
-  render() {
-    const { navigate } = this.props.navigation;
+    newUser() {
+        if (this.state.password1 == this.state.password2 && this.state.fullName !== undefined) {
+            this.props.navigation.navigate('LoggedIn', {})
+            return axios.post('https://wheresmybike.glitch.me/user/', {
+                fullName: this.state.fullName,
+                password: this.state.password1,
+                latitude: null,
+                longitude: null
+            })
+                .then(res => res.data)
+        } else {
+            this.setState({ temp: "Passwords did not match or you are missing some of the fields" })
+        }
+    } 
+    render() {
+    //const { navigate } = this.props.navigation;
      return (
       <View style={styles.outer}>
       <View style={styles.container}>
@@ -37,30 +48,30 @@ static navigationOptions = {
       <Text style={styles.logoText}> WHERE'S  MY BIKE </Text>
         <TextInput
             placeholder="Username"
+            autoCorrect={false}
+            onChangeText={(text) => this.setState({ fullName: text })}
             placeholderTextColor="#FFF"
             style={styles.input}
             />
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#FFF"
-            style={styles.input}
-            />
-
         <TextInput
             placeholder="Password"
+            onChangeText={(text) => this.setState({ password1: text })}
+            autoCorrect={false}
+            secureTextEntry={true}
             placeholderTextColor="#FFF"
-            secureTextEntry
             style={styles.input}
             />
-          <TextInput
+            <TextInput
             placeholder="Repeat Password"
+            onChangeText={(text) => this.setState({ password2: text })}
+            autoCorrect={false}
+            secureTextEntry={true}
             placeholderTextColor="#FFF"
-            secureTextEntry
             style={styles.input}
             />
-            </View>
-            <View>
-        <TouchableOpacity onPress= { ()=> navigate('LoggedIn')}>
+        <TouchableOpacity onPress= { ()=> this.newUser()}
+        
+        >
         <Text style={styles.buttonText}>SIGN UP</Text>
         </TouchableOpacity>
         </View>
@@ -68,8 +79,7 @@ static navigationOptions = {
 
        );
   }
-}
-
+};               
 const styles = StyleSheet.create({
     outer: {
       flex: 1,

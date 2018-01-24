@@ -10,20 +10,17 @@ import {
 import MapView from 'react-native-maps';
 import { StackNavigator } from 'react-navigation';
 import MapViewDirections from 'react-native-maps-directions'
-
+const axios = require('axios');
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.004;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-let id = 0;
 
+const timer = require('react-native-timer');
+let id = 0;
 function randomColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
-const coordinates = [{
-  latitude: 55.768548,
-  longitude: 12.503559,}
-];
 
 const GOOGLE_MAPS_APIKEY = '...';
 class DefaultMarkers extends React.Component {
@@ -45,13 +42,35 @@ static navigationOptions = {
       markerPosition: {
         latitude: 0,
         longitude: 0
-      }
+      },
+      coordinates: {
+        latitude: 0,
+        longitude:0  
+      },
     }
   }
-
   watchID: ?number = null
 
-  componentDidMount() {
+updateLatLng(responseJson) {
+  let cord = object.assign({}, this.state.coordinates); 
+        cord.latitude = responseJson.latitude,
+        cord.longitude = responseJson.longitude
+        this.setState({
+          cord: coordinates
+          })
+}
+  componentWillMount() {
+   function fetchMarkers() {
+  fetch('https://wheresmybike.glitch.me/lat/')
+      .then((response) => response.json())
+      .then((data) => {
+        updateLatLng(data)
+
+      })
+      .catch((error) => {
+      console.log(error);
+      })  
+    }
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = parseFloat(position.coords.latitude)
       var long = parseFloat(position.coords.longitude)
@@ -84,7 +103,12 @@ static navigationOptions = {
       this.setState({markerPosition: lastRegion})
     })
   }
-
+  postMarker(e) {
+      return axios.post('https://wheresmybike.glitch.me/lat/', {
+          latitude: this.state.markerPosition.latitude,
+          longitude: this.state.markerPosition.longitude,
+})
+};
   onMapPress(e) {
     this.setState({
       markers: [
@@ -97,6 +121,7 @@ static navigationOptions = {
         },
       ],
     });
+    this.postMarker()
   }
   clearMarkers(e){
     this.setState({
@@ -104,8 +129,16 @@ static navigationOptions = {
       //...this.state.markers]
     });
   }
-
+  componentWillUnmount() {
+    clearTimeout(this.timer)
+  }
   render() {
+     //var data = fetchMarkers()
+     //console.log(data)
+//   const coordinates = [{
+//   latitude: 55.768548 ,
+//   longitude: 12.503559,
+// }];
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
@@ -115,31 +148,32 @@ static navigationOptions = {
           initialPosition={this.state.initialRegion}
           region={this.state.initialPosition}
         >
-        <MapView.Marker coordinate={coordinates[0]} />
-        <MapView.Marker coordinate={this.state.markerPosition}>
-             <View style={styles.radius}>
-              <View style={styles.marker} />
+          <MapView.Marker coordinate={this.state.coordinates}/>
+          <MapView.Marker coordinate={this.state.markerPosition}>
+            <View style={styles.radius}>
+               <View style={styles.marker} />
             </View>
-         </MapView.Marker>
+          </MapView.Marker>
         <MapViewDirections
-        origin = {this.state.initialPosition}
-        destination = {coordinates[0]}
-        apikey = {"AIzaSyD-SDJ2cVwlJgqLgTHaU76SCxyJpzPDhOA"}
-        strokeWidth = {4}
-        strokeColor = "darkblue"
-        mode = "walking"
+          origin = {this.state.initialPosition}
+          destination = {this.state.coordinates}
+          apikey = {"AIzaSyD-SDJ2cVwlJgqLgTHaU76SCxyJpzPDhOA"}
+          strokeWidth = {4}
+          strokeColor = "darkblue"
+          mode = "walking"
+          onError={(errorMessage) => {
+            console.log('IGOTANERROR')
+          }}
         />
-          {this.state.markers.map(marker => (
-            <MapView.Marker
-              key={marker.key}
-              coordinate={this.state.markerPosition}
-              pinColor={marker.color}
-              bubble={this.state.initialPosition}
-            >
+        {this.state.markers.map(marker => (
+          <MapView.Marker
+            key={marker.key}
+            coordinate={this.state.markerPosition}
+          >
             <View style={styles.radius}>
               <View style={styles.marker} />
             </View>
-            </MapView.Marker>
+          </MapView.Marker>
 
           ))}
         </MapView>
@@ -159,7 +193,8 @@ static navigationOptions = {
         </View>
       </View>
     );
-  }
+  } 
+
 }
 
 DefaultMarkers.propTypes = {

@@ -8,65 +8,75 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   AsyncStorage,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native';
 import {StackNavigator } from 'react-navigation';
 
 
-export default class Login extends React.Component<> {
-  static navigationOptions = {
-    title: 'Home',
-  };
+export default class Login extends React.Component {
+  state = {
+    temp: 'Sign in',
+    loading: null
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
+  Login() {
+    this.setState({ loading: <ActivityIndicator size="large" color="blue" /> })
+    fetch('https://wheresmybike.glitch.me/user')
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.username == this.state.username && data.password == this.state.password) {
+                this.setState({ temp: "Access granted" })
+                setTimeout(() => {
+                    this.props.navigation.navigate('LoggedIn',{})
+                    this.Unmount(), 1500
+                })
+            } else if (data.username == this.state.username) {
+                this.setState({ temp: "Wrong password" })
+                this.setState({ loading: null })
+            }
         }
-    }
-/*
-    componentDidMount() {
-       this._loadInitialState().done();
-    }
-    _loadInitialState = async () => {
-        var value = await AsyncStorage.getItem('user');
-        if ((value) !== null {
-            this.props.navigation.navigate 'P');
-        }
-    }*/
-  render() {
-    const { navigate } = this.props.navigation;
+        ).catch((error) => {
+            this.setState({ temp: "User does not exist" })
+            this.setState({ loading: null })
+        })
+}
+
+Unmount() {
+    this.setState({ loading: null })
+    this.setState({ temp: "Sign in" })
+}
+render() {
+//    const { navigate } = this.props.navigation;
      return (
       <View style={styles.outer}>
-
-     
      <View style={styles.container}>
       <Image
             style={styles.backgroundImage}
             source={require('../Images/loogoo.png')}
       />
-      
+
       <Text style={styles.logoText}> WHERE'S  MY BIKE </Text>
         <TextInput
-
+            placeholder="Username"
             autoCorrect={false}
-            placeholder="Username or Email"
             placeholderTextColor="#FFF"
             style={styles.input}
+            onChangeText={(text) => this.setState({ username: text })}
             />
         <TextInput
             placeholder="Password"
             placeholderTextColor="#FFF"
             secureTextEntry
             style={styles.input}
+            onChangeText={(text) => this.setState({ password: text })}
             />
-        </View>  
+        </View>
         <View>
-        <TouchableOpacity onPress= { ()=> navigate('LoggedIn')}>
+        <TouchableOpacity onPress= { ()=> this.Login()}>
         <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress= { ()=> navigate('SignUp')}>
+        <TouchableOpacity onPress= { ()=> this.props.navigation.navigate('SignUp')}>
         <Text style={styles.buttonTexto}>SIGN UP</Text>
         </TouchableOpacity>
         </View>
@@ -74,7 +84,6 @@ export default class Login extends React.Component<> {
        );
   }
 }
-
 const styles = StyleSheet.create({
     outer: {
       flex: 1,

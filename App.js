@@ -44,7 +44,7 @@ async function requestCameraPermission() {
     console.warn(err)
   }
 }
-export default class App extends React.Component<{}> {
+export default class App extends React.Component {
   render() {
     return (
         <Application />
